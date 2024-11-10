@@ -39,6 +39,7 @@ const getContactById = asyncHandler( async (req,res)=>{
         res.status(404)
         throw new Error("Not found the id")
     }
+
     res.status(200).json(contact)
 });
 //@desc update contacts
@@ -51,6 +52,12 @@ const updateContact = asyncHandler( async (req,res)=>{
         res.status(404)
         throw new Error("Not found the id")
     }
+
+    if(contact.user_id.toString()!== req.user.id){
+        res.status(403);
+        throw new Error("User is not authorized")
+    }
+
     const updatedcontact = await Contact.findByIdAndUpdate(
         req.params.id,
         req.body,
@@ -68,6 +75,12 @@ const deleteContact = asyncHandler( async(req,res)=>{
         res.status(404)
         throw new Error("Not found the id")
     }
+
+    if(contact.user_id.toString()!== req.user.id){
+        res.status(403);
+        throw new Error("User is not authorized")
+    }
+
     //await contact.remove();
     res.status(200).json(contact)
 });

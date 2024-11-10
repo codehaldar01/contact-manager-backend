@@ -33,7 +33,7 @@ const userRegister = asyncHandler( async(req,res)=>{
 
     console.log(`user has been created ${user}`);
     if(user){
-        res.status(201).json({_id: user.id, email: user.email})
+        res.status(201).json({id: user.id, email: user.email})
     }
     else{
         res.status(400)
